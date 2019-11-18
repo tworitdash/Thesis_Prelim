@@ -1,0 +1,13 @@
+z = 1:0.1:100;
+
+m = 1:1:10;
+
+for i = 1:length(m)
+    der_ = (besselj(m(i) - 1, z) - besselj(m(i) + 1, z))./2;
+    
+    
+    
+    plot(z, der_, 'LineWidth', 2);
+    hold on;
+
+end

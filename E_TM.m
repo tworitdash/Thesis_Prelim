@@ -1,8 +1,8 @@
 function [Erho, Ephi, Ez] = E_TM(epsilon, m, rho, phi, beta_rho, z, beta, omega, mu)
     B = 1;
    
-    C = 0;
-    D = 1;
+    C = 1;
+    D = 0;
     
     beta_z = -1j .* sqrt(-(beta.^2 - beta_rho.^2));
     

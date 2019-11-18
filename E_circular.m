@@ -2,9 +2,11 @@ close all;
 clear;
 clc;
 
-f_ = input('Frequency of operation in GHz: ');
-f = f_ * 1e9;
-omega = 2 * pi * f;
+%% Waveguide parameters
+d = 0.0405319403216; % diameter in meters
+r = d/2;             % radius
+
+
 c0 = 3e8;
 er0 = 8.85418782e-12;
 mu0 = 1.25663706e-6;
@@ -13,31 +15,12 @@ er = 1;                 %relative permittivity
 mur = 1;                %relative permeability
 epsilon = er * er0;
 mu = mu0 * mur;
-
-r = 2; % radius in meters
-
-lamb = c0./f; % wavelength
- 
-beta = 2 * pi ./ lamb; % wave number
-
-rho = eps:r/1000:r;
-
-phi = -pi+eps:pi/2000:pi-eps;
-
-[rho_, phi_] = meshgrid(rho, phi);
-
-mode = input('Which mode (TE/TM): ', 's');
-
 %% Zeros of Bessel's functions and their derivatives:
-
-
 m = input('Input the first digit of the mode number: ');
 n = input('Input the second digit of the mode number: ');
-
+mode = input('Which mode (TE/TM): ', 's');
 
 xm = linspace(0.1, 100, 100000);
-
-
 
 Jm = @(z) besselj(m, z);                                         % Bessel's function
 
@@ -62,6 +45,7 @@ for i = 1:size(chsign, 2)
 end
 
 
+
 xmn = xmn_all(n); 
 
 
@@ -72,6 +56,22 @@ z = 0.2;
 %% Cut of frequency
 
 fc = xmn ./ (2 * pi * r * sqrt(mu .* epsilon));
+
+%% Source Parameters
+f = fc + eps;
+
+omega = 2 * pi * f;
+
+lamb = c0./f; % wavelength
+ 
+beta = 2 * pi ./ lamb; % wave number
+
+rho = eps:r/1000:r;
+
+phi = -pi+eps:pi/2000:pi-eps;
+
+[rho_, phi_] = meshgrid(rho, phi);
+
 
 %% Wave equations
 
@@ -114,6 +114,11 @@ polarPcolor(rho, phi.*180/pi, abs(Hphi)); shading flat;
 colormap('jet');
 title('H_{\phi}', 'FontSize', 12, 'FontWeight', 'bold');
 
+% 
+% figure;
+% polarPcolor(rho, phi.*180/pi, abs(Hz)); shading flat; colormap('jet');
+% title('Hz', 'FontSize', 12, 'FontWeight', 'bold');
+% colormap('jet');
 % figure;
 % surface(rho, phi.*180/pi, abs(Erho)); shading flat; colormap('jet');
 % 
@@ -131,9 +136,23 @@ title('H_{\phi}', 'FontSize', 12, 'FontWeight', 'bold');
 
 figure;
 polarPcolor(rho, phi.*180/pi, abs(E)); shading flat; colormap('jet');
-
+title('E', 'FontSize', 12, 'FontWeight', 'bold');
+colormap('jet');
 figure;
 polarPcolor(rho, phi.*180/pi, abs(H)); shading flat; colormap('jet');
+title('H', 'FontSize', 12, 'FontWeight', 'bold');
+colormap('jet');
+
+% figure;
+% contour(rho, phi.*180/pi, abs(E));
+% figure;
+% contour(rho, phi.*180/pi, abs(H));
+% figure;
+% polarPcolor(rho, phi.*180/pi, abs(sqrt(abs(Hrho).^2 + abs(Hphi).^2))); shading flat; colormap('jet');
+% title('H_{\rho} + H_{\phi}', 'FontSize', 12, 'FontWeight', 'bold');
+
+
+
 % figure;
 % contour(rho, phi.* 180/pi, abs(E));
 %    
