@@ -159,7 +159,7 @@ h = pcolor(x,y, abs(E));
 
 set(h,'ZData',-1+zeros(size(E)))
 hold on;
-quiver(x(1:e:end, 1:e:end),y(1:e:end, 1:e:end),real(Hx(1:e:end, 1:e:end)),real(Hy(1:e:end, 1:e:end)), 2, 'w');
+quiver(x(1:e:end, 1:e:end),y(1:e:end, 1:e:end),imag(Hx(1:e:end, 1:e:end)),imag(Hy(1:e:end, 1:e:end)), 2, 'w');
 shading interp;
 colorbar;
 colormap('jet');
@@ -174,7 +174,7 @@ hold on;
 
 shading interp;
 
-quiver(x(1:e:end, 1:e:end),y(1:e:end, 1:e:end),imag(Ex(1:e:end, 1:e:end)),imag(Ey(1:e:end, 1:e:end)), 2, 'w');
+quiver(x(1:e:end, 1:e:end),y(1:e:end, 1:e:end),real(Ex(1:e:end, 1:e:end)),real(Ey(1:e:end, 1:e:end)), 2, 'w');
 colorbar;
 colormap('jet');
 title('H', 'FontSize', 12, 'FontWeight', 'bold');
