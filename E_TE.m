@@ -1,8 +1,8 @@
 function [Erho, Ephi, Ez] = E_TE(epsilon, m, rho, phi, beta_rho, z, beta)
     A = 1;
    
-    C1 = 0; % C1 and D1 are for the rho component
-    D1 = 1; 
+    C1 = 1; % C1 and D1 are for the rho component
+    D1 = 0; 
 %     
 %     C2 = 0; % C2 and D2 are for the phi component
 %     D2 = 1;

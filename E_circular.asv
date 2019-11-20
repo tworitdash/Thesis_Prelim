@@ -97,87 +97,44 @@ y = rho_ .* sin(phi_);
 
 Hx = cos(phi_) .* Hrho - sin(phi_) .* Hphi;
 Hy = sin(phi_) .* Hrho + cos(phi_) .* Hphi;
-
+e = 50;
 % figure;
 % quiver(x(1:e:end, 1:e:end),y(1:e:end, 1:e:end),abs(Hx(1:e:end, 1:e:end)),abs(Hy(1:e:end, 1:e:end)));
 % 
 % figure;
 % quiver(x(1:e:end, 1:e:end),y(1:e:end, 1:e:end),abs(Ex(1:e:end, 1:e:end)),abs(Ey(1:e:end, 1:e:end)));
 
-% figure;
-% surface(x, y, abs(sqrt(abs(Ex).^2 + abs(Ey).^2))); shading flat;
-% %colormap('jet');
-% title('E', 'FontSize', 12, 'FontWeight', 'bold');
-% colorbar;
-% hold on;
-% quiver(x(1:e:end, 1:e:end),y(1:e:end, 1:e:end),abs(Ex(1:e:end, 1:e:end)),abs(Ey(1:e:end, 1:e:end)), 0.7, 'w');
-% 
-% figure;
-% surface(x, y, abs(sqrt(abs(Hx).^2 + abs(Hy).^2 + abs(Hz).^2))); shading flat;
-% %colormap('jet');
-% title('H', 'FontSize', 12, 'FontWeight', 'bold');
-% colorbar;
-% hold on;
-% quiver(x(1:e:end, 1:e:end),y(1:e:end, 1:e:end),abs(Hx(1:e:end, 1:e:end)),abs(Hy(1:e:end, 1:e:end)), 0.7, 'r');
+figure;
+surface(x, y, abs(sqrt(abs(Ex).^2 + abs(Ey).^2))); shading flat;
+%colormap('jet');
+title('E', 'FontSize', 12, 'FontWeight', 'bold');
+colorbar;
+hold on;
+quiver(x(1:e:end, 1:e:end),y(1:e:end, 1:e:end),abs(Ex(1:e:end, 1:e:end)),abs(Ey(1:e:end, 1:e:end)), 0.7, 'w');
+
+figure;
+surface(x, y, abs(sqrt(abs(Hx).^2 + abs(Hy).^2 + abs(Hz).^2))); shading flat;
+%colormap('jet');
+title('H', 'FontSize', 12, 'FontWeight', 'bold');
+colorbar;
+hold on;
+quiver(x(1:e:end, 1:e:end),y(1:e:end, 1:e:end),abs(Hx(1:e:end, 1:e:end)),abs(Hy(1:e:end, 1:e:end)), 0.7, 'r');
 
 E = sqrt(abs(Erho).^2 + abs(Ephi).^2 + Ez.^2);
 H = sqrt(abs(Hrho).^2 + abs(Hphi).^2 + Hz.^2);
 
+figure;
+contour(x, y, abs(H));
+grid on;
+hold on;
 
 dx = x(2, 1) - x(1, 1);
 dy = y(1, 2) - y(1, 1);
 
+dHx = gradient(Hx, dx);
+dHx = gradient(Hx, dx);
+quiver(x, y, dHx, dHy);
 
-dHx = gradient(imag(Hx), dx);
-dHy = gradient(imag(Hy), dy);
-
-dEx = gradient(real(Ex), dx);
-dEy = gradient(real(Ey), dy);
-
-% figure;
-% contour(x, y, abs(E));
-% 
-% grid on;
-% hold on;
-% 
-% quiver(x(1:e:end, 1:e:end), y(1:e:end, 1:e:end), dEx(1:e:end, 1:e:end), dEy(1:e:end, 1:e:end));
-% title('E', 'FontSize', 12, 'FontWeight', 'bold');
-% 
-% figure;
-% contour(x, y, abs(H));
-% 
-% grid on;
-% hold on;
-% 
-% quiver(x(1:e:end, 1:e:end), y(1:e:end, 1:e:end), dHx(1:e:end, 1:e:end), dHy(1:e:end, 1:e:end));
-% title('H', 'FontSize', 12, 'FontWeight', 'bold');
-
-e = 50;
-
-figure;
-h = pcolor(x,y, abs(E));
-
-set(h,'ZData',-1+zeros(size(E)))
-hold on;
-quiver(x(1:e:end, 1:e:end),y(1:e:end, 1:e:end),real(Hx(1:e:end, 1:e:end)),real(Hy(1:e:end, 1:e:end)), 2, 'w');
-shading interp;
-colorbar;
-colormap('jet');
-title('E', 'FontSize', 12, 'FontWeight', 'bold');
-
-
-figure;
-h = pcolor(x,y, abs(H));
-
-set(h,'ZData',-1+zeros(size(H)))
-hold on;
-
-shading interp;
-
-quiver(x(1:e:end, 1:e:end),y(1:e:end, 1:e:end),imag(Ex(1:e:end, 1:e:end)),imag(Ey(1:e:end, 1:e:end)), 2, 'w');
-colorbar;
-colormap('jet');
-title('H', 'FontSize', 12, 'FontWeight', 'bold');
 % 
 % figure;
 %    
