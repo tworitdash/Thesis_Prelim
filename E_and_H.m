@@ -1,5 +1,5 @@
 
-function [Erho, Ephi, Ez, Hrho, Hphi, Hz] = E_and_H(rho_, phi_, er, mur, z, r, m, n, mode)
+function [Erho, Ephi, Ez, Hrho, Hphi, Hz, beta_z] = E_and_H(rho_, phi_, er, mur, z, r, m, n, mode, f)
 
 
 %% Waveguide parameters 
@@ -48,13 +48,15 @@ beta_rho = xmn/r;  % wave number along the rho direction (\beta_{\rho})
 fc = xmn ./ (2 * pi * r * sqrt(mu .* epsilon));
 
 %% Source Parameters
-f = fc + eps;
+% f = fc + eps;
 
 omega = 2 * pi * f;
 
 lamb = c0./f; % wavelength
  
 beta = 2 * pi ./ lamb; % wave number
+
+beta_z = -1j .* sqrt(-(beta.^2 - beta_rho.^2));
 
 %[rho_, phi_] = meshgrid(rho, phi);
 
